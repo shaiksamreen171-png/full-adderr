@@ -1,0 +1,24 @@
+module differentiator(
+    input clk,
+    input rst,
+    input in_signal,
+    output reg diff_out
+);
+
+reg previous;
+
+always @(posedge clk or posedge rst)
+begin
+    if (rst)
+    begin
+        previous <= 0;
+        diff_out <= 0;
+    end
+    else
+    begin
+        diff_out <= in_signal & ~previous; // Positive edge detection
+        previous <= in_signal;
+    end
+end
+
+endmodule

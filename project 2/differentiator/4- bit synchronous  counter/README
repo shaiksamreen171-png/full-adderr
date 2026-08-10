@@ -1,0 +1,98 @@
+# 4-Bit Synchronous Counter using Verilog
+
+## Objective
+
+Design and simulate a 4-bit synchronous binary counter using Verilog HDL.
+
+## Description
+
+A synchronous counter updates all flip-flops simultaneously on the rising edge of the clock. This design counts from 0 to 15 (0000 to 1111) and then wraps back to 0.
+
+## Files
+
+- sync_counter.v       : Verilog design
+- tb_sync_counter.v    : Testbench
+- README.md            : Project documentation
+
+## Inputs
+
+| Signal | Description |
+|---------|-------------|
+| clk     | Clock input |
+| reset   | Active-high synchronous reset |
+
+## Output
+
+| Signal | Description |
+|---------|-------------|
+| count[3:0] | 4-bit counter output |
+
+## Truth Table
+
+| Clock Edge | Reset | Count |
+|------------|-------|-------|
+| Rising     | 1     | 0000  |
+| Rising     | 0     | Count + 1 |
+
+## Simulation
+
+Compile:
+
+```bash
+iverilog -o counter sync_counter.v tb_sync_counter.v
+```
+
+Run:
+
+```bash
+vvp counter
+```
+
+Generate waveform:
+
+```verilog
+initial begin
+    $dumpfile("counter.vcd");
+    $dumpvars(0, tb_sync_counter);
+end
+```
+
+View waveform:
+
+```bash
+gtkwave counter.vcd
+```
+
+## Expected Count Sequence
+
+```
+0000
+0001
+0010
+0011
+0100
+0101
+0110
+0111
+1000
+1001
+1010
+1011
+1100
+1101
+1110
+1111
+0000
+```
+
+## Applications
+
+- Digital clocks
+- Event counters
+- Frequency division
+- Address generation
+- Sequence generators
+
+## Author
+
+Verilog HDL Project – 4-bit Synchronous Counter

@@ -1,0 +1,68 @@
+# Verilog Differentiator (Positive Edge Detector)
+
+## Overview
+
+This project implements a digital differentiator using Verilog HDL.
+The differentiator detects the positive edge (0→1 transition) of the input signal and produces a one-clock-cycle output pulse.
+
+## Files
+
+- differentiator.v
+- tb_differentiator.v
+- README.md
+
+## Functionality
+
+Output Equation:
+
+diff_out = in_signal & (~previous)
+
+where `previous` stores the input value from the previous clock cycle.
+
+## Simulation
+
+Compile:
+
+iverilog -o diff differentiator.v tb_differentiator.v
+
+Run:
+
+vvp diff
+
+Generate Waveform:
+
+Add the following to the testbench:
+
+```verilog
+initial begin
+    $dumpfile("diff.vcd");
+    $dumpvars(0, tb_differentiator);
+end
+```
+
+View waveform:
+
+```bash
+gtkwave diff.vcd
+```
+
+## Expected Result
+
+Whenever the input changes from LOW to HIGH, the output becomes HIGH for exactly one clock cycle.
+
+Example:
+
+Input:
+0 0 1 1 0 1 1 0
+
+Output:
+0 0 1 0 0 1 0 0
+
+## Applications
+
+- Edge Detection
+- Digital Signal Processing
+- Pulse Generation
+- Event Detection
+- FPGA Designs
+-

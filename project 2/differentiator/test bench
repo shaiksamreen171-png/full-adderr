@@ -1,0 +1,44 @@
+`timescale 1ns/1ps
+
+module tb_differentiator;
+
+reg clk;
+reg rst;
+reg in_signal;
+wire diff_out;
+
+// Instantiate DUT
+differentiator uut (
+    .clk(clk),
+    .rst(rst),
+    .in_signal(in_signal),
+    .diff_out(diff_out)
+);
+
+// Clock Generation
+always #5 clk = ~clk;
+
+initial
+begin
+    clk = 0;
+    rst = 1;
+    in_signal = 0;
+
+    #10 rst = 0;
+
+    #10 in_signal = 1;
+    #20 in_signal = 0;
+    #20 in_signal = 1;
+    #20 in_signal = 1;
+    #20 in_signal = 0;
+    #20 in_signal = 1;
+    #20 $finish;
+end
+
+initial
+begin
+    $monitor("Time=%0t clk=%b rst=%b in=%b diff=%b",
+              $time, clk, rst, in_signal, diff_out);
+end
+
+endmodule
